@@ -2,12 +2,21 @@
   trait ResponseTrait {
     public static function fncResponse($response, $endpoint, $status = 200, $error = null, ) {
       if(!empty($response)) {
-        $json = array(
-          'status' => $status,
-          'total' => count($response),
-          'endpoint' => $endpoint,
-          'results' => $response
-        );
+
+        if(!empty($response["lastId"])) {
+          $json = array(
+            'status' => $status,
+            'endpoint' => $endpoint,
+            'results' => $response
+          );
+        } else {
+          $json = array(
+            'status' => $status,
+            'total' => count($response),
+            'endpoint' => $endpoint,
+            'results' => $response
+          );
+        }
       } else {
         $json = array(
           'status' => $status ?? 404,

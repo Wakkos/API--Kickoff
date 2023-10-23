@@ -1,19 +1,18 @@
 <?php
   trait ResponseTrait {
-    public static function fncResponse($response, $endpoint) {
+    public static function fncResponse($response, $endpoint, $status = 200, $error = null, ) {
       if(!empty($response)) {
         $json = array(
-          'status' => 200,
+          'status' => $status,
           'total' => count($response),
           'endpoint' => $endpoint,
           'results' => $response
         );
       } else {
         $json = array(
-          'status' => 404,
-          'total' => count((is_countable($response)?$response:[])),
+          'status' => $status ?? 404,
           'endpoint' => $endpoint,
-          'results' => "Not Found"
+          'results' => $error ?? "Not Found"
         );
       }
 

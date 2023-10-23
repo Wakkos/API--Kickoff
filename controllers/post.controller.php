@@ -1,45 +1,23 @@
 <?php
+  use PHPMailer\PHPMailer\PHPMailer;
+  use PHPMailer\PHPMailer\Exception;
+  use \Stripe\Exception\ApiErrorException;
 
-require_once "models/connection.php";
 
-class PostController {
+  require_once "models/post.model.php";
+  require_once "models/get.model.php";
+  require_once "traits/post-controller/post.controller.utilities.php";
+  require_once "traits/post-controller/post.controller.users.functions.php";
+  require_once "traits/response.controller.trait.php";
 
- //-----> Post request to add new Test
 
-  static public function postLogin($table, $data) {
-    echo json_encode($data);
+
+
+  class postController {
+
+    use postControllerUtilityTraits;
+
+    use postControllerUsersTraits;
+
+    use ResponseTrait;
   }
-
-
-  //-----> Post request to add data
-  static public function postData($table, $data) {
-    $response = PostModel::postData($table, $data);
-
-    $return = new PostController();
-    $return -> fncResponse($response, null);
-  }
-
-
-
-
-  //-----> Controller response
-  public function fncResponse($response, $error, $status = 200) {
-    $json = array();
-
-    if(!empty($response)) {
-      $json = array(
-        'status' => $status,
-        'results' => $response
-      );
-    }
-    else {
-      $json = array(
-        'status' => $status,
-        'results' => $error ?? "Not Found"
-      );
-    }
-
-    http_response_code($json["status"]);
-    echo json_encode($json);
-  }
-}

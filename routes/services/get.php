@@ -35,5 +35,31 @@ $startAt = $_GET["startAt"] ?? null;
 $endAt = $_GET["endAt"] ?? null;
 $userID = $_GET["userID"] ?? null;
 
-//-----> Request WITHOUT filter
+
+
+
+if(isset($_GET["linkTo"]) && isset($_GET["equalTo"]) && !isset($_GET["rel"]) && !isset($_GET["type"])) {
+  $response -> getDataFilter($table, $select, $_GET["linkTo"], $_GET["equalTo"], $orderBy, $orderMode, $startAt, $endAt);
+}
+
+
+//-----> Get Requests WITHOUT filter among RELATED TABLES
+else if(isset($_GET["rel"]) && isset($_GET["type"]) && $table == "relations" && !isset($_GET["linkTo"]) && !isset($_GET["equalTo"])) {
+  $response -> getRelData($_GET["rel"], $_GET["type"], $select, $orderBy, $orderMode, $startAt, $endAt);
+}
+
+//-----> Get Requests WITH filters among RELATED TABLES
+else if(isset($_GET["rel"]) && isset($_GET["type"]) && $table == "relations" && isset($_GET["linkTo"]) && isset($_GET["equalTo"])) {
+  $response -> getRelDataFilter($_GET["rel"], $_GET["type"], $select, $_GET["linkTo"], $_GET["equalTo"], $orderBy, $orderMode, $startAt, $endAt);
+}
+
+//-----> Get Requests to get AVG user tests by category
+else if($table == "averageByCategory" && isset($_GET["userId"])) {
+  $response -> getAverageByCategory($_GET["userId"]);
+}
+
+
+else {
+  //-----> Request WITHOUT filter
   $response -> getData($table, $select, $orderBy, $orderMode, $startAt, $endAt);
+}

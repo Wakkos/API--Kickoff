@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === "OPTIONS") {
 }
 require_once "vendor/autoload.php";
 
+
 date_default_timezone_set('UTC');
 
 if (file_exists(__DIR__ . '/.env')) {

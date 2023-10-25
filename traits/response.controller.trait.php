@@ -1,6 +1,6 @@
 <?php
   trait ResponseTrait {
-    public static function fncResponse($response, $endpoint, $status = 200, $error = null, ) {
+    public static function fncResponse($response, $endpoint, $status = 200, $error = null ) {
       if(!empty($response)) {
 
         if(!empty($response["lastId"])) {
@@ -10,12 +10,17 @@
             'results' => $response
           );
         } else {
+
           $json = array(
             'status' => $status,
-            'total' => count($response),
             'endpoint' => $endpoint,
-            'results' => $response
           );
+          if (is_countable($response)) {
+            $json['total'] = count($response);
+          }
+
+          $json['results'] = $response;
+
         }
       } else {
         $json = array(

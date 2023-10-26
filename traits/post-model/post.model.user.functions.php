@@ -51,9 +51,6 @@ trait PostModelUserFunctionsTraits {
 
       if(isset($response["comment"]) && $response["comment"] == "Sucess data entry") {
         $response['email_user'] = $data['email_user'];
-        echo '<pre>'; print_r($data); echo '</pre>';
-        echo '<pre>'; print_r($response); echo '</pre>';
-
         return $response;
       }
     }
@@ -96,7 +93,11 @@ trait PostModelUserFunctionsTraits {
           $response[0]->token_expiry_user = $token["exp"];
           $response[0]->success = true;
 
-          return $response;
+          return [
+            'success' => true,
+            'message' => "Login Successful",
+            'response' => $response
+          ];
         }
       }
       else {

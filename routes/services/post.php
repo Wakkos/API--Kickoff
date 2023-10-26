@@ -14,7 +14,7 @@ if (isset($_GET["register"]) && $_GET["register"] == true) {
 
 // Login User
 if (isset($_GET["login"]) && $_GET["login"] == true) {
-    $response->postLogin($table, $_POST);
+    $response->loginUser($table, $_POST);
     exit;
 }
 
